@@ -1,13 +1,14 @@
 import React from "react";
 
-import Form from "./Form";
 import Context from "./Context";
 
-function FormProvider({ schema }) {
+function FormProvider({ children, schema }) {
   const FormContext = Context(schema);
   return (
     <FormContext.Provider>
-      <Form context={FormContext.Context} />
+      {React.Children.map(children, child =>
+        React.cloneElement(child, { context: FormContext.Context })
+      )}
     </FormContext.Provider>
   );
 }

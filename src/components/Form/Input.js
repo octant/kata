@@ -11,7 +11,6 @@ export default function({ name, context }) {
 
   useEffect(() => {
     console.log("rendering input..." + name);
-    console.log("Errors: " + inputs.errors[name]);
   }, [inputs.values[name]]);
 
   return (
