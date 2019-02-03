@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from "react";
 
-export default schema => {
-  const InputContext = createContext();
+export default (schema, values = {}) => {
+  const FormContext = createContext();
 
   const defaultValues = Object.entries(schema).reduce(
     (prev, [name, def]) => ({ ...prev, [name]: def.defaultValue }),
@@ -9,9 +9,9 @@ export default schema => {
   );
 
   const initialState = {
-    errors: validate(defaultValues),
+    errors: validate({ ...defaultValues, ...values }),
     schema: schema,
-    values: defaultValues
+    values: { ...defaultValues, ...values }
   };
 
   const reducer = (state, { type, payload }) => {
@@ -39,25 +39,25 @@ export default schema => {
         ({ test }) => !test(values)
       );
 
-      return errors
+      return errors.length > 0
         ? { ...prev, [name]: errors.map(({ message }) => message) }
         : prev;
     }, {});
   }
 
-  function InputContextProvider(props) {
-    const [inputs, inputDispatcher] = useReducer(reducer, initialState);
-    const value = { inputs, inputDispatcher };
+  function FormContextProvider(props) {
+    const [form, formDispatcher] = useReducer(reducer, initialState);
+    const value = { form, formDispatcher };
 
     return (
-      <InputContext.Provider value={value}>
+      <FormContext.Provider value={value}>
         {props.children}
-      </InputContext.Provider>
+      </FormContext.Provider>
     );
   }
 
   return {
-    Context: InputContext,
-    Provider: InputContextProvider
+    Context: FormContext,
+    Provider: FormContextProvider
   };
 };

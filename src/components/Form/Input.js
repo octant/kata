@@ -1,17 +1,17 @@
 import React, { useContext, useEffect } from "react";
 
 export default function({ name, context }) {
-  const { inputs, inputDispatcher } = useContext(context);
-  const { label, type } = inputs.schema[name];
+  const { form, formDispatcher } = useContext(context);
+  const { label, type } = form.schema[name];
   const set = e =>
-    inputDispatcher({
+    formDispatcher({
       type: "values.update",
       payload: { [e.target.name]: e.target.value }
     });
 
   useEffect(() => {
     console.log("rendering input..." + name);
-  }, [inputs.values[name]]);
+  }, [form.values[name]]);
 
   return (
     <>
@@ -19,14 +19,14 @@ export default function({ name, context }) {
         <label htmlFor={name}>{label}: </label>
         <input
           name={name}
-          value={inputs.values[name]}
+          value={form.values[name]}
           onChange={set}
           type={type}
         />
       </div>
       <div>
         <span style={{ display: "block", height: "1.1em", color: "orangered" }}>
-          {inputs.errors[name][0]}
+          {form.errors[name] ? form.errors[name][0] : ""}
         </span>
       </div>
     </>

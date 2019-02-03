@@ -10,7 +10,7 @@ import { person, vehicle } from "./inputs";
 function App() {
   return (
     <>
-      <Form schema={person}>
+      <Form schema={person} values={{ firstName: "Michael" }}>
         <h3>Personal Information</h3>
         <Input name="firstName" />
         <Input name="lastName" />
