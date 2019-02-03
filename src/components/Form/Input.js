@@ -26,7 +26,9 @@ export default function({ name, context }) {
         />
       </div>
       <div>
-        <span style={{ color: "rebeccapurple" }}>{inputs.errors[name][0]}</span>
+        <span style={{ display: "block", height: "1.1em", color: "orangered" }}>
+          {inputs.errors[name][0]}
+        </span>
       </div>
     </>
   );
