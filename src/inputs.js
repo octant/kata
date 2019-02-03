@@ -1,4 +1,4 @@
-export default {
+export const person = {
   firstName: {
     defaultValue: "",
     display: true,
@@ -26,6 +26,48 @@ export default {
     observe: [],
     required: false,
     type: "number",
+    validations: []
+  }
+};
+
+export const vehicle = {
+  make: {
+    defaultValue: "",
+    display: true,
+    label: "Make",
+    observe: [],
+    required: false,
+    type: "text",
+    validations: []
+  },
+
+  model: {
+    defaultValue: "",
+    display: true,
+    label: "Model",
+    observe: [],
+    required: false,
+    type: "text",
+    validations: []
+  },
+
+  year: {
+    defaultValue: 2019,
+    display: true,
+    label: "Year",
+    observe: [],
+    required: false,
+    type: "number",
+    validations: []
+  },
+
+  color: {
+    defaultValue: "",
+    display: true,
+    label: "Color",
+    observe: [],
+    required: false,
+    type: "text",
     validations: []
   }
 };

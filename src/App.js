@@ -3,13 +3,13 @@ import React from "react";
 import "./App.css";
 
 import Form from "./components/Form";
-import inputs from "./inputs";
+import { person, vehicle } from "./inputs";
 
 function App() {
   return (
     <>
-      <Form defs={inputs} name="husband" />
-      <Form defs={inputs} name="wife" />
+      <Form schema={person} name="husband" />
+      <Form schema={vehicle} name="wife" />
     </>
   );
 }

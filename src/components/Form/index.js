@@ -1,13 +1,14 @@
 import React from "react";
 
-import { InputContextProvider } from "../../contexts/Input";
 import Form from "./Form";
+import Context from "./Context";
 
-function FormProvider() {
+function FormProvider({ schema }) {
+  const FormContext = Context(schema);
   return (
-    <InputContextProvider>
-      <Form />
-    </InputContextProvider>
+    <FormContext.provider>
+      <Form context={FormContext.context} schema={FormContext.schema} />
+    </FormContext.provider>
   );
 }
 

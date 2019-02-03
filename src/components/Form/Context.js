@@ -1,10 +1,9 @@
 import React, { createContext, useReducer } from "react";
-import inputDefs from "../inputs";
 
 export default schema => {
   const InputContext = createContext();
 
-  const initialState = Object.entries(inputDefs).reduce(
+  const initialState = Object.entries(schema).reduce(
     (prev, [name, def]) => ({ ...prev, [name]: def.defaultValue }),
     {}
   );
@@ -33,6 +32,7 @@ export default schema => {
 
   return {
     context: InputContext,
-    provider: InputContextProvider
+    provider: InputContextProvider,
+    schema
   };
 };

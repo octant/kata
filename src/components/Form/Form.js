@@ -1,11 +1,9 @@
 import React, { useContext, useEffect } from "react";
 
 import FormalInput from "./Input";
-import schema from "../../inputs";
-import { InputContext } from "../../contexts/Input";
 
-export default function Form() {
-  const { inputs, inputDispatcher } = useContext(InputContext);
+export default function Form({ context, schema }) {
+  const { inputs, inputDispatcher } = useContext(context);
 
   useEffect(() => {
     console.log("rendering form...");
@@ -16,15 +14,15 @@ export default function Form() {
   return (
     <>
       <h1>Formal Inputs</h1>
-      <div>
-        <FormalInput name="firstName" {...schema.firstName} />
-      </div>
-      <div>
-        <FormalInput name="lastName" {...schema.lastName} />
-      </div>
-      <div>
-        <FormalInput name="age" {...schema.age} />
-      </div>
+      {Object.entries(schema).map(([name, definition]) => (
+        <FormalInput
+          key={name}
+          name={name}
+          definition={definition}
+          context={context}
+        />
+      ))}
+
       <div>
         <button onClick={() => console.log(inputs)}>Submit</button>
         <button onClick={reset}>Reset</button>
