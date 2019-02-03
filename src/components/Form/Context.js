@@ -3,19 +3,23 @@ import React, { createContext, useReducer } from "react";
 export default schema => {
   const InputContext = createContext();
 
-  const initialState = Object.entries(schema).reduce(
-    (prev, [name, def]) => ({ ...prev, [name]: def.defaultValue }),
-    {}
-  );
+  const initialState = {
+    errors: {},
+    schema: schema,
+    values: Object.entries(schema).reduce(
+      (prev, [name, def]) => ({ ...prev, [name]: def.defaultValue }),
+      {}
+    )
+  };
 
-  const reducer = (inputs, action) => {
-    switch (action.type) {
+  const reducer = (state, { type, payload }) => {
+    switch (type) {
       case "reset":
-        return { ...initialState };
+        return { ...state, values: { ...initialState.values } };
       case "set":
-        return { ...inputs, [action.name]: action.value };
+        return { ...state, values: { ...state.values, ...payload } };
       default:
-        return { ...inputs };
+        return { ...state };
     }
   };
 

@@ -7,7 +7,7 @@ function FormProvider({ schema }) {
   const FormContext = Context(schema);
   return (
     <FormContext.provider>
-      <Form context={FormContext.context} schema={FormContext.schema} />
+      <Form context={FormContext.context} />
     </FormContext.provider>
   );
 }

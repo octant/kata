@@ -8,8 +8,8 @@ import { person, vehicle } from "./inputs";
 function App() {
   return (
     <>
-      <Form schema={person} name="husband" />
-      <Form schema={vehicle} name="wife" />
+      <Form schema={person} />
+      <Form schema={vehicle} />
     </>
   );
 }

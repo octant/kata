@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 
 import FormalInput from "./Input";
 
-export default function Form({ context, schema }) {
+export default function Form({ context }) {
   const { inputs, inputDispatcher } = useContext(context);
 
   useEffect(() => {
@@ -14,17 +14,12 @@ export default function Form({ context, schema }) {
   return (
     <>
       <h1>Formal Inputs</h1>
-      {Object.entries(schema).map(([name, definition]) => (
-        <FormalInput
-          key={name}
-          name={name}
-          definition={definition}
-          context={context}
-        />
+      {Object.keys(inputs.schema).map(name => (
+        <FormalInput key={name} name={name} context={context} />
       ))}
 
       <div>
-        <button onClick={() => console.log(inputs)}>Submit</button>
+        <button onClick={() => console.log(inputs.values)}>Submit</button>
         <button onClick={reset}>Reset</button>
       </div>
     </>
