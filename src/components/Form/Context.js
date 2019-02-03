@@ -3,25 +3,47 @@ import React, { createContext, useReducer } from "react";
 export default schema => {
   const InputContext = createContext();
 
+  const defaultValues = Object.entries(schema).reduce(
+    (prev, [name, def]) => ({ ...prev, [name]: def.defaultValue }),
+    {}
+  );
+
   const initialState = {
-    errors: {},
+    errors: validate(defaultValues),
     schema: schema,
-    values: Object.entries(schema).reduce(
-      (prev, [name, def]) => ({ ...prev, [name]: def.defaultValue }),
-      {}
-    )
+    values: defaultValues
   };
 
   const reducer = (state, { type, payload }) => {
     switch (type) {
       case "reset":
-        return { ...state, values: { ...initialState.values } };
-      case "set":
-        return { ...state, values: { ...state.values, ...payload } };
+        return {
+          ...state,
+          values: { ...initialState.values },
+          errors: validate({ ...initialState.values })
+        };
+      case "values.update":
+        return {
+          ...state,
+          values: { ...state.values, ...payload },
+          errors: validate({ ...state.values, ...payload })
+        };
       default:
         return { ...state };
     }
   };
+
+  function validate(values) {
+    return Object.entries(values).reduce((prev, [name, value]) => {
+      const errors = schema[name].validations.filter(
+        ({ test }) => !test(values)
+      );
+
+      return errors
+        ? { ...prev, [name]: errors.map(({ message }) => message) }
+        : prev;
+    }, {});
+  }
 
   function InputContextProvider(props) {
     const [inputs, inputDispatcher] = useReducer(reducer, initialState);
@@ -35,8 +57,7 @@ export default schema => {
   }
 
   return {
-    context: InputContext,
-    provider: InputContextProvider,
-    schema
+    Context: InputContext,
+    Provider: InputContextProvider
   };
 };

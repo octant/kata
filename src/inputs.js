@@ -6,7 +6,12 @@ export const person = {
     observe: ["lastName"],
     required: false,
     type: "text",
-    validations: []
+    validations: [
+      {
+        test: ({ firstName }) => firstName[0] === "M",
+        message: "Must begin with 'M'"
+      }
+    ]
   },
 
   lastName: {
@@ -16,7 +21,12 @@ export const person = {
     observe: [],
     required: false,
     type: "text",
-    validations: []
+    validations: [
+      {
+        test: ({ firstName }) => firstName[0] === "M",
+        message: "'First Name' must begin with 'M'"
+      }
+    ]
   },
 
   age: {

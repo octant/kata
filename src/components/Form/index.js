@@ -6,9 +6,9 @@ import Context from "./Context";
 function FormProvider({ schema }) {
   const FormContext = Context(schema);
   return (
-    <FormContext.provider>
-      <Form context={FormContext.context} />
-    </FormContext.provider>
+    <FormContext.Provider>
+      <Form context={FormContext.Context} />
+    </FormContext.Provider>
   );
 }
 
