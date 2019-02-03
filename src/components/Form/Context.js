@@ -1,6 +1,6 @@
 import React, { createContext, useReducer } from "react";
 
-export default (schema, values = {}) => {
+export default ({ schema, values = {} }) => {
   const FormContext = createContext();
 
   const defaultValues = Object.entries(schema).reduce(
