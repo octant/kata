@@ -3,7 +3,8 @@ import React, { useContext, useEffect } from "react";
 export default function(WrappedComponent) {
   return function({ name, context }) {
     const { form, formDispatcher } = useContext(context);
-    const { label, type } = form.schema[name];
+    const { label, options, type, required } = form.schema[name];
+
     const set = e =>
       formDispatcher({
         type: "values.update",
@@ -21,7 +22,7 @@ export default function(WrappedComponent) {
         errors={(form.errors[name] || []).filter(
           ({ message }) => message !== "*"
         )}
-        {...{ name, label, type }}
+        {...{ name, label, options, required, type }}
       />
     );
   };
