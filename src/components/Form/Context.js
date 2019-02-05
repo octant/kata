@@ -34,7 +34,7 @@ export default ({ schema, values = {} }) => {
   };
 
   function validate(values) {
-    return Object.entries(values).reduce((prev, [name, value]) => {
+    return Object.entries(values).reduce((prev, [name]) => {
       const validations = [
         ...schema[name].validations,
         {

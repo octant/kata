@@ -11,11 +11,17 @@ import Template from "./components/Templates/react-strap";
 function App() {
   return (
     <div style={{ margin: `1.6em` }}>
-      <Form schema={person} values={{ firstName: "Michael" }}>
+      <Form
+        schema={person}
+        values={{ firstName: "Michael", email: "mwood@data-crush.com" }}
+      >
         <h3>Personal Information</h3>
+        <Input name="email" />
         <Input name="firstName" />
         <Input name="lastName" />
-        <Input name="age" />
+        <Input name="dob" />
+        <Input name="numberOfSiblings" />
+        <Input name="hasDriversLicense" />
         <Controls />
       </Form>
       <hr />
