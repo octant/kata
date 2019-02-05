@@ -34,10 +34,16 @@ export default ({ schema, values = {} }) => {
   };
 
   function validate(values) {
-    return Object.keys(values).reduce((prev, name) => {
-      const errors = schema[name].validations.filter(
-        ({ test }) => !test(values)
-      );
+    return Object.entries(values).reduce((prev, [name, value]) => {
+      const validations = [
+        ...schema[name].validations,
+        {
+          test: ({ [name]: value }) =>
+            schema[name].required ? value !== "" : true,
+          message: "*"
+        }
+      ];
+      const errors = validations.filter(({ test }) => !test(values));
 
       return errors.length > 0
         ? { ...prev, [name]: errors.map(({ message }) => message) }
