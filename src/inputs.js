@@ -4,7 +4,7 @@ export const person = {
     display: true,
     label: "First Name",
     observe: ["lastName"],
-    required: false,
+    required: true,
     type: "text",
     validations: [
       {
@@ -19,7 +19,7 @@ export const person = {
     display: true,
     label: "Last Name",
     observe: [],
-    required: false,
+    required: true,
     type: "text",
     validations: [
       {
