@@ -1,28 +1,32 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+import "./App.css";
+
+import Form from "./components/Form";
+import Input from "./components/Form/Input";
+import Controls from "./components/Form/Controls";
+import { person, vehicle } from "./inputs";
+
+function App() {
+  return (
+    <>
+      <Form schema={person} values={{ firstName: "Michael" }}>
+        <h3>Personal Information</h3>
+        <Input name="firstName" />
+        <Input name="lastName" />
+        <Input name="age" />
+        <Controls />
+      </Form>
+      <Form schema={vehicle}>
+        <h3>Vehicle Information</h3>
+        <Input name="make" />
+        <Input name="model" />
+        <Input name="year" />
+        <Input name="color" />
+        <Controls />
+      </Form>
+    </>
+  );
 }
 
 export default App;
