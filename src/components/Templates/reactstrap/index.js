@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import {
   Button as Rsb,
+  Form as Rsf,
   FormFeedback,
   FormGroup,
   Label,
   Input as Rsi
 } from "reactstrap";
-import { withInput } from "../../Form";
+import { withInput, withForm } from "../../Form";
 
 class InputTemplates extends React.Component {
   handleChange = e => {
@@ -196,4 +197,4 @@ export const Button = ({ context, children, onClick, ...props }) => {
 
 export const Input = withInput(InputTemplates);
 
-export { default as Form } from "../../Form";
+export const Form = withForm(Rsf);

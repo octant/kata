@@ -9,6 +9,7 @@ function App() {
   return (
     <div style={{ margin: `1.6em` }}>
       <Form
+        name="personal"
         schema={person}
         values={{ firstName: "Michael", email: "mwood@data-crush.com" }}
       >
