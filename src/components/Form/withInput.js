@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 
 export default function(WrappedComponent) {
   return function({ name, context }) {
@@ -10,10 +10,6 @@ export default function(WrappedComponent) {
         type: "values.update",
         payload: { [name]: value }
       });
-
-    useEffect(() => {
-      console.log("rendering input..." + name);
-    }, [form.values[name]]);
 
     return (
       <WrappedComponent
