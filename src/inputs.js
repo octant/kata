@@ -41,7 +41,6 @@ export const person = {
     defaultValue: "",
     display: true,
     label: "Last Name",
-    observe: [],
     required: true,
     type: "text",
     validations: [
@@ -93,7 +92,7 @@ export const person = {
       { value: "chocolate", text: "Chocolate" },
       { value: "chunkyMonkey", text: "Chunky Monkey" },
       { value: "rockyRoad", text: "Rocky road" },
-      { value: "straWberry", text: "Strawberry" },
+      { value: "strawBerry", text: "Strawberry" },
       { value: "vanilla", text: "Vanilla" }
     ],
     validations: [
@@ -160,7 +159,6 @@ export const vehicle = {
     defaultValue: "",
     display: true,
     label: "Make",
-    observe: [],
     required: false,
     type: "text",
     validations: []
@@ -170,7 +168,6 @@ export const vehicle = {
     defaultValue: "",
     display: true,
     label: "Model",
-    observe: [],
     required: false,
     type: "text",
     validations: []
@@ -180,7 +177,6 @@ export const vehicle = {
     defaultValue: 2019,
     display: true,
     label: "Year",
-    observe: [],
     required: false,
     type: "number",
     validations: []
@@ -190,7 +186,6 @@ export const vehicle = {
     defaultValue: "",
     display: true,
     label: "Color",
-    observe: [],
     required: false,
     type: "text",
     validations: []

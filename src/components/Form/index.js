@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import Context from "./Context";
 
@@ -24,20 +24,27 @@ export function withInput(WrappedComponent) {
     const { form, formDispatcher } = useContext(context);
     const { label, options, type, required } = form.schema[name];
 
-    const set = ({ name, value }) =>
+    const [dirty, setDirty] = useState(false);
+    const [touched, setTouched] = useState(false);
+
+    const handleChange = ({ name, value }) => {
+      setTouched(true);
+      setDirty(true);
       formDispatcher({
         type: "values.update",
         payload: { [name]: value }
       });
+    };
 
     return (
       <WrappedComponent
-        change={set}
+        change={handleChange}
+        onFocus={() => setTouched(true)}
         value={form.values[name]}
         errors={(form.errors[name] || []).filter(
           ({ message }) => message !== "*"
         )}
-        {...{ name, label, options, required, type }}
+        {...{ dirty, name, label, options, required, touched, type }}
       />
     );
   };

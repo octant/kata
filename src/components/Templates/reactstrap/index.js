@@ -35,14 +35,14 @@ class InputTemplates extends React.Component {
   };
 
   checkbox() {
-    const { change, value, ...props } = this.props;
+    const { change, dirty, touched, value, ...props } = this.props;
 
     return (
       <FormGroup check>
         <Label check>
           <Rsi
             required
-            invalid={this.invalid(this.props.errors[0])}
+            invalid={this.invalid(this.props.errors[0], touched)}
             onChange={this.handleCheck}
             checked={value}
             {...props}
@@ -56,7 +56,7 @@ class InputTemplates extends React.Component {
   }
 
   multiselect() {
-    const { change, type, ...props } = this.props;
+    const { change, dirty, touched, type, ...props } = this.props;
 
     return (
       <FormGroup>
@@ -65,7 +65,7 @@ class InputTemplates extends React.Component {
           {props.required ? "*" : ""}
         </Label>
         <Rsi
-          invalid={this.invalid(props.errors[0])}
+          invalid={this.invalid(props.errors[0], touched)}
           onChange={this.handleMultiSelect}
           type="select"
           {...props}
@@ -83,7 +83,7 @@ class InputTemplates extends React.Component {
   }
 
   radio() {
-    const { change, ...props } = this.props;
+    const { change, dirty, touched, ...props } = this.props;
 
     return (
       <FormGroup tag="fieldset">
@@ -91,7 +91,6 @@ class InputTemplates extends React.Component {
           {props.label}
           {props.required ? "*" : ""}
         </legend>
-        <FormFeedback>{props.errors[0]}</FormFeedback>
         {props.options.map(({ text, value }) => {
           return (
             <FormGroup key={value} check>
@@ -99,12 +98,13 @@ class InputTemplates extends React.Component {
                 <Rsi
                   name={props.name}
                   type={props.type}
-                  invalid={this.invalid(props.errors[0])}
+                  invalid={this.invalid(props.errors[0], touched)}
                   onChange={this.handleChange}
                   checked={props.value === value}
                   value={value}
                 />{" "}
                 {text}
+                <FormFeedback>{props.errors[0]}</FormFeedback>
               </Label>
             </FormGroup>
           );
@@ -114,7 +114,7 @@ class InputTemplates extends React.Component {
   }
 
   select() {
-    const { change, ...props } = this.props;
+    const { change, dirty, touched, ...props } = this.props;
 
     return (
       <FormGroup>
@@ -123,7 +123,7 @@ class InputTemplates extends React.Component {
           {props.required ? "*" : ""}
         </Label>
         <Rsi
-          invalid={this.invalid(props.errors[0])}
+          invalid={this.invalid(props.errors[0], touched)}
           onChange={this.handleChange}
           {...props}
         >
@@ -139,7 +139,7 @@ class InputTemplates extends React.Component {
   }
 
   text() {
-    const { change, ...props } = this.props;
+    const { change, dirty, touched, ...props } = this.props;
 
     return (
       <FormGroup>
@@ -148,7 +148,7 @@ class InputTemplates extends React.Component {
           {props.required ? "*" : ""}
         </Label>
         <Rsi
-          invalid={this.invalid(props.errors[0])}
+          invalid={this.invalid(props.errors[0], touched)}
           onChange={this.handleChange}
           {...props}
         />
@@ -157,8 +157,8 @@ class InputTemplates extends React.Component {
     );
   }
 
-  invalid(error) {
-    return error !== undefined && error !== "*";
+  invalid(error, touched) {
+    return touched && error !== undefined;
   }
 
   input() {
