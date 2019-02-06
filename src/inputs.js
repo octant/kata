@@ -30,8 +30,8 @@ export const person = {
     type: "text",
     validations: [
       {
-        test: ({ firstName }) => firstName[0] === "M",
-        message: "Must begin with 'M'"
+        test: ({ firstName }) => /^[A-Z]/.test(firstName),
+        message: "Must begin with an upper case"
       }
     ]
   },
@@ -45,8 +45,8 @@ export const person = {
     type: "text",
     validations: [
       {
-        test: ({ firstName }) => firstName[0] === "M",
-        message: "'First Name' must begin with 'M'"
+        test: ({ lastName }) => /^[A-Z]/.test(lastName),
+        message: "Must begin with an upper case"
       }
     ]
   },
@@ -82,6 +82,27 @@ export const person = {
     ]
   },
 
+  topThree: {
+    type: "multiselect",
+    label: "Choose your top three flavours of icecream",
+    defaultValue: [],
+    display: true,
+    required: true,
+    options: [
+      { value: "chocolate", text: "Chocolate" },
+      { value: "chunkyMonkey", text: "Chunky Monkey" },
+      { value: "rockyRoad", text: "Rocky road" },
+      { value: "straWberry", text: "Strawberry" },
+      { value: "vanilla", text: "Vanilla" }
+    ],
+    validations: [
+      {
+        test: ({ topThree }) => topThree.length === 3,
+        message: "Choose three"
+      }
+    ]
+  },
+
   hasDriversLicense: {
     type: "select",
     label: "Do you have a driver's license?",
@@ -101,6 +122,33 @@ export const person = {
           return hasDriversLicense === "true" ? ofDrivingAge && dob : true;
         },
         message: "You must be 16 to have a driver's license"
+      }
+    ]
+  },
+
+  upgrade: {
+    type: "radio",
+    label: "Upgrade account?",
+    display: true,
+    defaultValue: "",
+    required: true,
+    options: [
+      { value: "accept", text: "Yes, upgrade my account" },
+      { value: "decline", text: "No, I'll keep what I have" }
+    ],
+    validations: []
+  },
+
+  agree: {
+    type: "checkbox",
+    required: true,
+    display: true,
+    defaultValue: "",
+    label: "I agree to the terms and conditions",
+    validations: [
+      {
+        test: ({ agree }) => agree,
+        message: "You must agree to the terms and conditions"
       }
     ]
   }
