@@ -7,7 +7,7 @@ function FormProvider({ children, schema, values }) {
   return (
     <FormContext.Provider>
       {React.Children.map(children, child =>
-        child.type
+        typeof child.type === "function"
           ? React.cloneElement(child, { context: FormContext.Context })
           : child
       )}
