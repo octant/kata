@@ -2,6 +2,7 @@
 import addYears from "date-fns/add_years";
 import format from "date-fns/format";
 import differenceInCalendarYears from "date-fns/difference_in_years";
+import "core-js";
 
 export const person = {
   email: {
