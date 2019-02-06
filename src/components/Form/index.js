@@ -7,10 +7,14 @@ function FormProvider({ children, schema, values }) {
   return (
     <FormContext.Provider>
       {React.Children.map(children, child =>
-        React.cloneElement(child, { context: FormContext.Context })
+        child.type
+          ? React.cloneElement(child, { context: FormContext.Context })
+          : child
       )}
     </FormContext.Provider>
   );
 }
+
+export { default as withInput } from "./withInput";
 
 export default FormProvider;

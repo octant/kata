@@ -2,11 +2,8 @@ import React from "react";
 
 import "./App.css";
 
-import Form from "./components/Form";
-import input from "./components/Form/Input";
-import Controls from "./components/Form/Controls";
-import { person, vehicle } from "./inputs";
-import Template from "./components/Templates/react-strap";
+import { person } from "./inputs";
+import { Button, Form, Input } from "./components/Templates/reactstrap";
 
 function App() {
   return (
@@ -20,24 +17,26 @@ function App() {
         <Input name="firstName" />
         <Input name="lastName" />
         <Input name="dob" />
+        <Input name="numberOfSiblings" />
         <Input name="hasDriversLicense" />
         <Input name="topThree" />
         <Input name="upgrade" />
         <Input name="agree" />
-        <Controls />
-      </Form>
-      <hr />
-      <Form schema={vehicle}>
-        <h3>Vehicle Information</h3>
-        <Input name="make" />
-        <Input name="model" />
-        <Input name="year" />
-        <Input name="color" />
-        <Controls />
+        <hr />
+        <Button
+          color="primary"
+          onClick={({ form }) => console.log(form.values)}
+        >
+          Submit
+        </Button>{" "}
+        <Button
+          onClick={({ formDispatcher }) => formDispatcher({ type: "reset" })}
+        >
+          Reset
+        </Button>
       </Form>
     </div>
   );
 }
 
-const Input = input(Template);
 export default App;

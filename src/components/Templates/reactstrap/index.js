@@ -1,7 +1,14 @@
-import React from "react";
-import { FormFeedback, FormGroup, Label, Input } from "reactstrap";
+import React, { useContext } from "react";
+import {
+  Button as Rsb,
+  FormFeedback,
+  FormGroup,
+  Label,
+  Input as Rsi
+} from "reactstrap";
+import { withInput } from "../../Form";
 
-class ReactStrapTemplates extends React.Component {
+class InputTemplates extends React.Component {
   handleChange = e => {
     const { change } = this.props;
     const { name, value } = e.target;
@@ -32,7 +39,7 @@ class ReactStrapTemplates extends React.Component {
     return (
       <FormGroup check>
         <Label check>
-          <Input
+          <Rsi
             required
             invalid={this.invalid(this.props.errors[0])}
             onChange={this.handleCheck}
@@ -56,7 +63,7 @@ class ReactStrapTemplates extends React.Component {
           {props.label}
           {props.required ? "*" : ""}
         </Label>
-        <Input
+        <Rsi
           invalid={this.invalid(props.errors[0])}
           onChange={this.handleMultiSelect}
           type="select"
@@ -68,7 +75,7 @@ class ReactStrapTemplates extends React.Component {
               {option.text}
             </option>
           ))}
-        </Input>
+        </Rsi>
         <FormFeedback>{props.errors[0]}</FormFeedback>
       </FormGroup>
     );
@@ -88,7 +95,7 @@ class ReactStrapTemplates extends React.Component {
           return (
             <FormGroup key={value} check>
               <Label>
-                <Input
+                <Rsi
                   name={props.name}
                   type={props.type}
                   invalid={this.invalid(props.errors[0])}
@@ -114,7 +121,7 @@ class ReactStrapTemplates extends React.Component {
           {props.label}
           {props.required ? "*" : ""}
         </Label>
-        <Input
+        <Rsi
           invalid={this.invalid(props.errors[0])}
           onChange={this.handleChange}
           {...props}
@@ -124,7 +131,7 @@ class ReactStrapTemplates extends React.Component {
               {option.text}
             </option>
           ))}
-        </Input>
+        </Rsi>
         <FormFeedback>{props.errors[0]}</FormFeedback>
       </FormGroup>
     );
@@ -139,7 +146,7 @@ class ReactStrapTemplates extends React.Component {
           {props.label}
           {props.required ? "*" : ""}
         </Label>
-        <Input
+        <Rsi
           invalid={this.invalid(props.errors[0])}
           onChange={this.handleChange}
           {...props}
@@ -153,7 +160,7 @@ class ReactStrapTemplates extends React.Component {
     return error !== undefined && error !== "*";
   }
 
-  field() {
+  input() {
     switch (this.props.type) {
       case "checkbox":
         return this.checkbox();
@@ -169,8 +176,24 @@ class ReactStrapTemplates extends React.Component {
   }
 
   render() {
-    return this.field();
+    return this.input();
   }
 }
 
-export default ReactStrapTemplates;
+export const Button = ({ context, children, onClick, ...props }) => {
+  const { form, formDispatcher } = useContext(context);
+
+  function handleClick() {
+    onClick({ ...props, form, formDispatcher });
+  }
+
+  return (
+    <Rsb {...props} onClick={handleClick}>
+      {children}
+    </Rsb>
+  );
+};
+
+export const Input = withInput(InputTemplates);
+
+export { default as Form } from "../../Form";

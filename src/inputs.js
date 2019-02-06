@@ -91,6 +91,7 @@ export const person = {
     options: [
       { value: "chocolate", text: "Chocolate" },
       { value: "chunkyMonkey", text: "Chunky Monkey" },
+      { value: "rockyRoad", text: "Rocky road" },
       { value: "straWberry", text: "Strawberry" },
       { value: "vanilla", text: "Vanilla" }
     ],
