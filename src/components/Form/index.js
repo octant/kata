@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import Context from "./Context";
 
@@ -36,10 +36,20 @@ export function withInput(WrappedComponent) {
       });
     };
 
+    const handleTouch = e => setTouched(true);
+
+    useEffect(() => {
+      formDispatcher({
+        type: "refs.add",
+        payload: { [name]: React.createRef(null) }
+      });
+    }, []);
+
     return (
       <WrappedComponent
         change={handleChange}
-        onFocus={() => setTouched(true)}
+        onFocus={handleTouch}
+        forwardRef={form.inputRefs[name]}
         value={form.values[name]}
         errors={(form.errors[name] || []).filter(
           ({ message }) => message !== "*"

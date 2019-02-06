@@ -29,12 +29,7 @@ export const person = {
     observe: ["lastName"],
     required: true,
     type: "text",
-    validations: [
-      {
-        test: ({ firstName }) => /^[A-Z]/.test(firstName),
-        message: "Must begin with an upper case"
-      }
-    ]
+    validations: []
   },
 
   lastName: {
@@ -43,12 +38,7 @@ export const person = {
     label: "Last Name",
     required: true,
     type: "text",
-    validations: [
-      {
-        test: ({ lastName }) => /^[A-Z]/.test(lastName),
-        message: "Must begin with an upper case"
-      }
-    ]
+    validations: []
   },
 
   dob: {
@@ -82,27 +72,6 @@ export const person = {
     ]
   },
 
-  topThree: {
-    type: "multiselect",
-    label: "Choose your top three flavours of icecream",
-    defaultValue: [],
-    display: true,
-    required: true,
-    options: [
-      { value: "chocolate", text: "Chocolate" },
-      { value: "chunkyMonkey", text: "Chunky Monkey" },
-      { value: "rockyRoad", text: "Rocky road" },
-      { value: "strawBerry", text: "Strawberry" },
-      { value: "vanilla", text: "Vanilla" }
-    ],
-    validations: [
-      {
-        test: ({ topThree }) => topThree.length === 3,
-        message: "Choose three"
-      }
-    ]
-  },
-
   hasDriversLicense: {
     type: "select",
     label: "Do you have a driver's license?",
@@ -122,6 +91,27 @@ export const person = {
           return hasDriversLicense === "true" ? ofDrivingAge && dob : true;
         },
         message: "You must be 16 to have a driver's license"
+      }
+    ]
+  },
+
+  topThree: {
+    type: "multiselect",
+    label: "Choose your top three flavours of icecream",
+    defaultValue: [],
+    display: true,
+    required: true,
+    options: [
+      { value: "chocolate", text: "Chocolate" },
+      { value: "chunkyMonkey", text: "Chunky Monkey" },
+      { value: "rockyRoad", text: "Rocky road" },
+      { value: "strawBerry", text: "Strawberry" },
+      { value: "vanilla", text: "Vanilla" }
+    ],
+    validations: [
+      {
+        test: ({ topThree }) => topThree.length === 3,
+        message: "Choose three"
       }
     ]
   },
