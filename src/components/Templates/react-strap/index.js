@@ -2,39 +2,99 @@ import React from "react";
 import { FormFeedback, FormGroup, Label, Input } from "reactstrap";
 
 class ReactStrapTemplates extends React.Component {
+  handleChange = e => {
+    const { change } = this.props;
+    const { name, value } = e.target;
+    change({ name, value });
+  };
+
+  handleCheck = e => {
+    const { change } = this.props;
+    const { name, checked } = e.target;
+    change({ name, value: checked });
+  };
+
+  handleMultiSelect = e => {
+    const { change } = this.props;
+    const { name, options } = e.target;
+    var value = [];
+    for (var i = 0, l = options.length; i < l; i++) {
+      if (options[i].selected) {
+        value.push(options[i].value);
+      }
+    }
+    change({ name, value });
+  };
+
   checkbox() {
+    const { change, value, ...props } = this.props;
+
     return (
       <FormGroup check>
         <Label check>
           <Input
             required
             invalid={this.invalid(this.props.errors[0])}
-            {...this.props}
+            onChange={this.handleCheck}
+            checked={value}
+            {...props}
           />
-          {this.props.label}
-          {this.props.required ? "*" : ""}
-          <FormFeedback>{this.props.errors[0]}</FormFeedback>
+          {props.label}
+          {props.required ? "*" : ""}
+          <FormFeedback>{props.errors[0]}</FormFeedback>
         </Label>
       </FormGroup>
     );
   }
 
+  multiselect() {
+    const { change, type, ...props } = this.props;
+
+    return (
+      <FormGroup>
+        <Label for={props.name}>
+          {props.label}
+          {props.required ? "*" : ""}
+        </Label>
+        <Input
+          invalid={this.invalid(props.errors[0])}
+          onChange={this.handleMultiSelect}
+          type="select"
+          {...props}
+          multiple
+        >
+          {props.options.map((option, i) => (
+            <option key={i} value={option.value}>
+              {option.text}
+            </option>
+          ))}
+        </Input>
+        <FormFeedback>{props.errors[0]}</FormFeedback>
+      </FormGroup>
+    );
+  }
+
   radio() {
-    const { options, label } = this.props;
+    const { change, ...props } = this.props;
+
     return (
       <FormGroup tag="fieldset">
         <legend>
-          {label}
-          {this.props.required ? "*" : ""}
+          {props.label}
+          {props.required ? "*" : ""}
         </legend>
-        <FormFeedback>{this.props.errors[0]}</FormFeedback>
-        {options.map(({ text, ...option }) => {
+        <FormFeedback>{props.errors[0]}</FormFeedback>
+        {props.options.map(({ text, value }) => {
           return (
-            <FormGroup key={option.id} check>
+            <FormGroup key={value} check>
               <Label>
                 <Input
-                  invalid={this.invalid(this.props.errors[0])}
-                  {...option}
+                  name={props.name}
+                  type={props.type}
+                  invalid={this.invalid(props.errors[0])}
+                  onChange={this.handleChange}
+                  checked={props.value === value}
+                  value={value}
                 />{" "}
                 {text}
               </Label>
@@ -46,33 +106,45 @@ class ReactStrapTemplates extends React.Component {
   }
 
   select() {
+    const { change, ...props } = this.props;
+
     return (
       <FormGroup>
-        <Label for={this.props.name}>
-          {this.props.label}
-          {this.props.required ? "*" : ""}
+        <Label for={props.name}>
+          {props.label}
+          {props.required ? "*" : ""}
         </Label>
-        <Input invalid={this.invalid(this.props.errors[0])} {...this.props}>
-          {this.props.options.map((option, i) => (
+        <Input
+          invalid={this.invalid(props.errors[0])}
+          onChange={this.handleChange}
+          {...props}
+        >
+          {props.options.map((option, i) => (
             <option key={i} value={option.value}>
               {option.text}
             </option>
           ))}
         </Input>
-        <FormFeedback>{this.props.errors[0]}</FormFeedback>
+        <FormFeedback>{props.errors[0]}</FormFeedback>
       </FormGroup>
     );
   }
 
   text() {
+    const { change, ...props } = this.props;
+
     return (
       <FormGroup>
-        <Label for={this.props.name}>
-          {this.props.label}
-          {this.props.required ? "*" : ""}
+        <Label for={props.name}>
+          {props.label}
+          {props.required ? "*" : ""}
         </Label>
-        <Input invalid={this.invalid(this.props.errors[0])} {...this.props} />
-        <FormFeedback>{this.props.errors[0]}</FormFeedback>
+        <Input
+          invalid={this.invalid(props.errors[0])}
+          onChange={this.handleChange}
+          {...props}
+        />
+        <FormFeedback>{props.errors[0]}</FormFeedback>
       </FormGroup>
     );
   }
@@ -82,11 +154,11 @@ class ReactStrapTemplates extends React.Component {
   }
 
   field() {
-    const type = this.props.type;
-
-    switch (type) {
+    switch (this.props.type) {
       case "checkbox":
         return this.checkbox();
+      case "multiselect":
+        return this.multiselect();
       case "radio":
         return this.radio();
       case "select":

@@ -20,8 +20,10 @@ function App() {
         <Input name="firstName" />
         <Input name="lastName" />
         <Input name="dob" />
-        <Input name="numberOfSiblings" />
         <Input name="hasDriversLicense" />
+        <Input name="topThree" />
+        <Input name="upgrade" />
+        <Input name="agree" />
         <Controls />
       </Form>
       <hr />

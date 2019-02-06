@@ -5,10 +5,10 @@ export default function(WrappedComponent) {
     const { form, formDispatcher } = useContext(context);
     const { label, options, type, required } = form.schema[name];
 
-    const set = e =>
+    const set = ({ name, value }) =>
       formDispatcher({
         type: "values.update",
-        payload: { [e.target.name]: e.target.value }
+        payload: { [name]: value }
       });
 
     useEffect(() => {
@@ -17,7 +17,7 @@ export default function(WrappedComponent) {
 
     return (
       <WrappedComponent
-        onChange={set}
+        change={set}
         value={form.values[name]}
         errors={(form.errors[name] || []).filter(
           ({ message }) => message !== "*"
