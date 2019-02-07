@@ -2,6 +2,7 @@
 import addYears from "date-fns/add_years";
 import format from "date-fns/format";
 import differenceInCalendarYears from "date-fns/difference_in_years";
+import "core-js";
 
 export const person = {
   email: {
@@ -28,27 +29,16 @@ export const person = {
     observe: ["lastName"],
     required: true,
     type: "text",
-    validations: [
-      {
-        test: ({ firstName }) => /^[A-Z]/.test(firstName),
-        message: "Must begin with an upper case"
-      }
-    ]
+    validations: []
   },
 
   lastName: {
     defaultValue: "",
     display: true,
     label: "Last Name",
-    observe: [],
     required: true,
     type: "text",
-    validations: [
-      {
-        test: ({ lastName }) => /^[A-Z]/.test(lastName),
-        message: "Must begin with an upper case"
-      }
-    ]
+    validations: []
   },
 
   dob: {
@@ -82,27 +72,6 @@ export const person = {
     ]
   },
 
-  topThree: {
-    type: "multiselect",
-    label: "Choose your top three flavours of icecream",
-    defaultValue: [],
-    display: true,
-    required: true,
-    options: [
-      { value: "chocolate", text: "Chocolate" },
-      { value: "chunkyMonkey", text: "Chunky Monkey" },
-      { value: "rockyRoad", text: "Rocky road" },
-      { value: "straWberry", text: "Strawberry" },
-      { value: "vanilla", text: "Vanilla" }
-    ],
-    validations: [
-      {
-        test: ({ topThree }) => topThree.length === 3,
-        message: "Choose three"
-      }
-    ]
-  },
-
   hasDriversLicense: {
     type: "select",
     label: "Do you have a driver's license?",
@@ -122,6 +91,27 @@ export const person = {
           return hasDriversLicense === "true" ? ofDrivingAge && dob : true;
         },
         message: "You must be 16 to have a driver's license"
+      }
+    ]
+  },
+
+  topThree: {
+    type: "multiselect",
+    label: "Choose your top three flavours of icecream",
+    defaultValue: [],
+    display: true,
+    required: true,
+    options: [
+      { value: "chocolate", text: "Chocolate" },
+      { value: "chunkyMonkey", text: "Chunky Monkey" },
+      { value: "rockyRoad", text: "Rocky road" },
+      { value: "strawBerry", text: "Strawberry" },
+      { value: "vanilla", text: "Vanilla" }
+    ],
+    validations: [
+      {
+        test: ({ topThree }) => topThree.length === 3,
+        message: "Choose three"
       }
     ]
   },
@@ -159,7 +149,6 @@ export const vehicle = {
     defaultValue: "",
     display: true,
     label: "Make",
-    observe: [],
     required: false,
     type: "text",
     validations: []
@@ -169,7 +158,6 @@ export const vehicle = {
     defaultValue: "",
     display: true,
     label: "Model",
-    observe: [],
     required: false,
     type: "text",
     validations: []
@@ -179,7 +167,6 @@ export const vehicle = {
     defaultValue: 2019,
     display: true,
     label: "Year",
-    observe: [],
     required: false,
     type: "number",
     validations: []
@@ -189,7 +176,6 @@ export const vehicle = {
     defaultValue: "",
     display: true,
     label: "Color",
-    observe: [],
     required: false,
     type: "text",
     validations: []

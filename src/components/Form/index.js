@@ -1,20 +1,61 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import Context from "./Context";
 
-function FormProvider({ children, schema, values }) {
-  const FormContext = Context({ schema, values });
-  return (
-    <FormContext.Provider>
-      {React.Children.map(children, child =>
-        child.type
-          ? React.cloneElement(child, { context: FormContext.Context })
-          : child
-      )}
-    </FormContext.Provider>
-  );
+export function withForm(WrappedComponent) {
+  return function({ children, schema, values, ...props }) {
+    const FormContext = Context({ schema, values });
+    return (
+      <FormContext.Provider>
+        <WrappedComponent {...props}>
+          {React.Children.map(children, child =>
+            typeof child.type === "function"
+              ? React.cloneElement(child, { context: FormContext.Context })
+              : child
+          )}
+        </WrappedComponent>
+      </FormContext.Provider>
+    );
+  };
 }
 
-export { default as withInput } from "./withInput";
+export function withInput(WrappedComponent) {
+  return function({ name, context }) {
+    const { form, formDispatcher } = useContext(context);
+    const { label, options, type, required } = form.schema[name];
 
-export default FormProvider;
+    const [dirty, setDirty] = useState(false);
+    const [touched, setTouched] = useState(false);
+
+    const handleChange = ({ name, value }) => {
+      setTouched(true);
+      setDirty(true);
+      formDispatcher({
+        type: "values.update",
+        payload: { [name]: value }
+      });
+    };
+
+    const handleTouch = e => setTouched(true);
+
+    useEffect(() => {
+      formDispatcher({
+        type: "refs.add",
+        payload: { [name]: React.createRef(null) }
+      });
+    }, []);
+
+    return (
+      <WrappedComponent
+        change={handleChange}
+        onFocus={handleTouch}
+        forwardRef={form.inputRefs[name]}
+        value={form.values[name]}
+        errors={(form.errors[name] || []).filter(
+          ({ message }) => message !== "*"
+        )}
+        {...{ dirty, name, label, options, required, touched, type }}
+      />
+    );
+  };
+}
