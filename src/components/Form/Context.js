@@ -10,6 +10,7 @@ export default ({ schema, values = {} }) => {
 
   const initialState = {
     errors: validate({ ...defaultValues, ...values }),
+    inputRefs: {},
     schema: schema,
     values: { ...defaultValues, ...values }
   };
@@ -27,6 +28,11 @@ export default ({ schema, values = {} }) => {
           ...state,
           values: { ...state.values, ...payload },
           errors: validate({ ...state.values, ...payload })
+        };
+      case "refs.add":
+        return {
+          ...state,
+          inputRefs: { ...state.inputRefs, ...payload }
         };
       default:
         return { ...state };

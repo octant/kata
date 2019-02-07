@@ -11,7 +11,10 @@ function App() {
       <Form
         name="personal"
         schema={person}
-        values={{ firstName: "Michael", email: "mwood@data-crush.com" }}
+        values={{
+          firstName: "Michael",
+          email: "mwood@data-crush.com"
+        }}
       >
         <h3>Personal Information</h3>
         <Input name="email" />
@@ -26,7 +29,13 @@ function App() {
         <hr />
         <Button
           color="primary"
-          onClick={({ form }) => console.log(form.values)}
+          onClick={({ form }) => {
+            Object.keys(form.errors).length > 0
+              ? form.inputRefs[
+                  Object.keys(form.errors).slice(0, 1)
+                ].current.focus()
+              : console.log(form.values);
+          }}
         >
           Submit
         </Button>{" "}
