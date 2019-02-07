@@ -6,8 +6,6 @@ import "core-js";
 
 export const person = {
   email: {
-    defaultValue: "",
-    display: true,
     type: "email",
     label: "Email Address",
     required: true,
@@ -23,28 +21,21 @@ export const person = {
   },
 
   firstName: {
-    defaultValue: "",
-    display: true,
-    label: "First Name",
-    observe: ["lastName"],
-    required: true,
     type: "text",
-    validations: []
+    label: "First Name",
+    required: true
   },
 
   lastName: {
-    defaultValue: "",
-    display: true,
-    label: "Last Name",
-    required: true,
     type: "text",
-    validations: []
+    label: "Last Name",
+    required: true
   },
 
   dob: {
     type: "date",
-    defaultValue: "",
     label: "Date of Birth",
+    required: true,
     validations: [
       {
         test: ({ dob }) =>
@@ -55,14 +46,11 @@ export const person = {
         test: ({ dob }) => dob < format(new Date(), "YYYY-MM-DD"),
         message: "Must be older than 0 years of age"
       }
-    ],
-    required: true
+    ]
   },
 
   numberOfSiblings: {
     type: "number",
-    defaultValue: "",
-    display: true,
     label: "# of Siblings",
     validations: [
       {
@@ -75,8 +63,6 @@ export const person = {
   hasDriversLicense: {
     type: "select",
     label: "Do you have a driver's license?",
-    defaultValue: "",
-    display: true,
     required: true,
     options: [
       {},
@@ -99,7 +85,6 @@ export const person = {
     type: "multiselect",
     label: "Choose your top three flavours of icecream",
     defaultValue: [],
-    display: true,
     required: true,
     options: [
       { value: "chocolate", text: "Chocolate" },
@@ -119,22 +104,17 @@ export const person = {
   upgrade: {
     type: "radio",
     label: "Upgrade account?",
-    display: true,
-    defaultValue: "",
     required: true,
     options: [
       { value: "accept", text: "Yes, upgrade my account" },
       { value: "decline", text: "No, I'll keep what I have" }
-    ],
-    validations: []
+    ]
   },
 
   agree: {
     type: "checkbox",
-    required: true,
-    display: true,
-    defaultValue: "",
     label: "I agree to the terms and conditions",
+    required: true,
     validations: [
       {
         test: ({ agree }) => agree,
@@ -146,38 +126,27 @@ export const person = {
 
 export const vehicle = {
   make: {
-    defaultValue: "",
-    display: true,
-    label: "Make",
-    required: false,
     type: "text",
-    validations: []
+    label: "Make",
+    required: false
   },
 
   model: {
-    defaultValue: "",
-    display: true,
-    label: "Model",
-    required: false,
     type: "text",
-    validations: []
+    label: "Model",
+    required: false
   },
 
   year: {
     defaultValue: 2019,
-    display: true,
     label: "Year",
     required: false,
-    type: "number",
-    validations: []
+    type: "number"
   },
 
   color: {
-    defaultValue: "",
-    display: true,
-    label: "Color",
-    required: false,
     type: "text",
-    validations: []
+    label: "Color",
+    required: false
   }
 };

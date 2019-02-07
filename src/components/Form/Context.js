@@ -1,17 +1,16 @@
 import React, { createContext, useReducer } from "react";
-
-export default ({ schema, values = {} }) => {
+import Schema from "./lib/schema";
+export default ({ schema: definition, values = {} }) => {
   const FormContext = createContext();
 
-  const defaultValues = Object.entries(schema).reduce(
-    (prev, [name, def]) => ({ ...prev, [name]: def.defaultValue }),
-    {}
-  );
+  const _schema = new Schema(definition);
+  const inputs = _schema.inputs();
+  const defaultValues = _schema.defaults();
 
   const initialState = {
     errors: validate({ ...defaultValues, ...values }),
     inputRefs: {},
-    schema: schema,
+    schema: inputs,
     values: { ...defaultValues, ...values }
   };
 
@@ -42,10 +41,10 @@ export default ({ schema, values = {} }) => {
   function validate(values) {
     return Object.entries(values).reduce((prev, [name]) => {
       const validations = [
-        ...schema[name].validations,
+        ...inputs[name].validations,
         {
           test: ({ [name]: value }) =>
-            schema[name].required ? value !== "" : true,
+            inputs[name].required ? value !== "" : true,
           message: "*"
         }
       ];
